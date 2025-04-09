@@ -13,6 +13,38 @@ const mockUpStrand = () => {
   return newStrand;
 };
 
+function pAequorFactory( num, array ) {
+  let obj = {
+    specimenNum: num,
+    dna: array,
+    mutate () {
+      let index =  Math.floor(Math.random() * this.dna.length );
+      let oldBase = this.dna[index]
+      let newBase = returnRandBase()
+      while ( oldBase === newBase ) {
+        newBase = returnRandBase();
+      }
+      this.dna.splice( index, 1, newBase )
+      return this.dna;
+    },
+    compareDNA ( obj ) {
+      let newDNA = obj.dna;
+      let currentDNA = this.dna;
+      let newDNACompare = newDNA.shift();
+      let currentDNACompare = currentDNA.shift()
+      console.log(newDNA)
+      console.log(currentDNA)
+      console.log(newDNACompare);
+      console.log(currentDNACompare);  
+    }
+  }
+  return obj;
+}
+
+let answer = pAequorFactory(12, mockUpStrand());
+let answer2 = pAequorFactory(12, mockUpStrand());
+console.log(answer)
+answer.compareDNA(answer2);
 
 
 
