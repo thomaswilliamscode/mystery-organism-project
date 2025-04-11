@@ -30,21 +30,55 @@ function pAequorFactory( num, array ) {
     compareDNA ( obj ) {
       let newDNA = obj.dna;
       let currentDNA = this.dna;
-      let newDNACompare = newDNA.shift();
-      let currentDNACompare = currentDNA.shift()
-      console.log(newDNA)
-      console.log(currentDNA)
-      console.log(newDNACompare);
-      console.log(currentDNACompare);  
+      let sameDNA = [];
+      for ( let i = 0; i < newDNA.length; i++ ) {
+        let newDNACompare = newDNA.shift();
+        let currentDNACompare = currentDNA.shift();
+        if ( newDNACompare === currentDNACompare ) {
+          sameDNA.push(newDNACompare)
+        }
+      } 
+      let answer = (100 / currentDNA.length ) * sameDNA.length;
+      console.log('specimen #1 and specimen #2 have ' + Math.round(answer) + '% DNA in common.')
+    }, 
+    willLikelySurvive () {
+      let DNA = this.dna; 
+      let DNALength = DNA.length;
+      let results = [];
+      for ( let i = 0; i < DNA.length; i ++ ) {
+        let current = DNA[i];
+        if ( current === 'C' || current === 'G' ) {
+          results.push(current);
+        }
+      }
+      let resultsLength = results.length; 
+      let answer = (100 / DNALength) * resultsLength;
+      if (Math.round(answer) >= 60 ) {
+        return true;
+      } else {
+        return false;
+      }
+      
     }
   }
   return obj;
 }
 
-let answer = pAequorFactory(12, mockUpStrand());
-let answer2 = pAequorFactory(12, mockUpStrand());
-console.log(answer)
-answer.compareDNA(answer2);
+function test() {
+  let instances = [];
+  let i = 1;
+  while ( instances.length < 30 ) {
+    let instance = pAequorFactory( i , mockUpStrand() );
+    let answer = instance.willLikelySurvive()
+    if ( answer ) {
+      instances.push(instance)
+      i++
+    }
+  }
+  return instances;
+}
+
+console.log(test())
 
 
 
